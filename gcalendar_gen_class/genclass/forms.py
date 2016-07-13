@@ -78,9 +78,12 @@ def create_csv_download(open_day, end_day, data):
 
     cnt = 13
     while (cnt < len(data) - 13):
+        # print("%d" % (cnt) + " " + str(data[cnt+6]))
         event = Event()
         time = get_time(data[cnt + 5])
         day_of_week = get_DOW(data[cnt + 5])
+        room = data[cnt+6]
+        building = data[cnt+7]
 
         first_date = datetime.strptime(open_day, "%Y%m%d")
         while first_date.strftime("%a").upper()[:2] != day_of_week:
@@ -92,7 +95,7 @@ def create_csv_download(open_day, end_day, data):
         event['dtend'] = first_date + time['end']
         event['rrule'] = 'FREQ=WEEKLY;UNTIL=' + end_day + ';BYDAY=' + day_of_week
         event['description'] = "Just test"
-        event['location'] = "King Mongkut's Institute of Technology Ladkrabang, 1 Chalong Krung, Thanon Chalong Krung, Lat Krabang, Bangkok 10520"
+        event['location'] = building + ": " + room
 
         cal.add_component(event)
         cnt += 8
